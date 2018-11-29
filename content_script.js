@@ -12,39 +12,39 @@ checkDivs();
  * RateMyProfessor.com
  */
 async function checkDivs() {
-		let instructorNames = [];
-    let divs = document.querySelectorAll(".course-section-instructor");
-		while (divs.length == 0) {
-				await sleep(200);
-				divs = document.querySelectorAll(".course-section-instructor");
+	let instructorNames = [];
+	let divs = document.querySelectorAll(".course-section-instructor");
+	while (divs.length == 0) {
+		await sleep(200);
+		divs = document.querySelectorAll(".course-section-instructor");
+	}
+	divs.forEach(function (el) {
+		let instructorName = el.children[0];
+		let insideText = instructorName.innerText;
+		if (insideText.toLowerCase().includes("view syllabus")) {
+			instructorName.innerText = insideText.substr(0, insideText.indexOf("View syllabus"));
+			insideText = instructorName.innerText;
 		}
-		divs.forEach(function(el) {
-        let instructorName = el.children[0];
-				let insideText = instructorName.innerText;
-				if (insideText.toLowerCase().includes("view syllabus")) {
-					instructorName.innerText = insideText.substr(0, insideText.indexOf("View syllabus"));
-					insideText = instructorName.innerText;
-				}
-        if (!insideText.includes("--")) {
-						let splitIt = (insideText).split(" ");
-						if (splitIt[1].includes(".") || splitIt[1].length == 1 | splitIt[2] != null) {
-							let cleanName = splitIt[0] + " " + splitIt[2];
-							instructorName.innerText = cleanName;
-						}
-						instructorNames.push(instructorName);
+		if (!insideText.includes("--")) {
+			let splitIt = (insideText).split(" ");
+			if (splitIt[1].includes(".") || splitIt[1].length == 1 | splitIt[2] != null) {
+				let cleanName = splitIt[0] + " " + splitIt[2];
+				instructorName.innerText = cleanName;
+			}
+			instructorNames.push(instructorName);
 
-        }
-    });
-    for (let i = 0; i < instructorNames.length; i++) {
-			getScores(instructorNames[i].innerText, instructorNames[i]);
-    }
+		}
+	});
+	for (let i = 0; i < instructorNames.length; i++) {
+		getScores(instructorNames[i].innerText, instructorNames[i]);
+	}
 }
 
 /*
  * Sleep function used to allow for the browser to load the course information
  */
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /*

@@ -1,0 +1,19 @@
+{
+    "name": "Rate My Prof",
+    "version": "1.1",
+    "description": "Shows Rate My Prof information on MyPlan",
+    "permissions": ["activeTab", "declarativeContent"],
+    "author": "Jonathan Cady",
+    "page_action": {
+      "default_title": "Prof scores will show up automatically!"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://myplan.uw.edu/course/*"],
+        "js": ["content_script.js", "jquery-3.3.1.min.js"],
+				"css": ["style.css"],
+        "run_at": "document_end"
+      }
+    ],
+    "manifest_version": 2
+}

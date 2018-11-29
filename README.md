@@ -10,4 +10,4 @@ Unforunately, I do not believe I will release it publicly on the Chrome extensio
 ## Technical Info
 So this extension actually utilizes one of RMP's "private" APIs to query and get the basic information about the professor and then web scrapes the actual ratings. If you would like to see the back-end code, please get in contact with me! 
 
-Hope you it helps!
+Hope it helps!

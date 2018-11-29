@@ -2,7 +2,7 @@
 Rate My Professor Chrome Extension for MyPlan
 
 ## How to Load
-This Chrome extension can be loaded as unpacked extension under the "More tools" -> "Entensions" menu on Chrome.
+This Chrome extension can be loaded as unpacked extension under the "More tools" -> "Extensions" menu on Chrome.
 
 ## More Details
 Unforunately, I do not believe I will release it publicly on the Chrome extension "store" because RMP has a history of taking such extensions down. So feel free to share this link, but it would be aweseome if it did not get published. Unless someone knows they will not take it down.

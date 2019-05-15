@@ -18,7 +18,7 @@ async function checkDivs() {
 	let instructorNames = [];
 	let divs = document.querySelectorAll(".course-section-instructor");
 	let count = 0;
-	while (divs.length == 0 && count < 50) {
+	while (divs.length == 0 && count < 20) {
 		await sleep(200);
 		divs = document.querySelectorAll(".course-section-instructor");
 		count++;
@@ -77,7 +77,7 @@ function createElements(message, originalEl) {
 		let upperEl = $(originalEl).parents('.course-section-instructor');
 		overallDiv.append(qualityEl, takeAgainEl, difficultyEl, linkEl);
 		overallDiv.addClass("rmp-info");
-		$(originalEl).children('.loading').remove();
+		$(originalEl).children('.rmp-loading').remove();
 		upperEl.append(overallDiv);
 	} else {
 		$(originalEl).children('.rmp-loading').remove();

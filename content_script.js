@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  * RateMyProfessor Chrome Extension
  * Not for public distribution
@@ -12,31 +14,40 @@ checkDivs();
  * RateMyProfessor.com
  */
 async function checkDivs() {
+	console.log('checking...');
 	let instructorNames = [];
 	let divs = document.querySelectorAll(".course-section-instructor");
-	while (divs.length == 0) {
+	let count = 0;
+	while (divs.length == 0 && count < 50) {
 		await sleep(200);
 		divs = document.querySelectorAll(".course-section-instructor");
+		count++;
 	}
-	divs.forEach(function (el) {
-		let instructorName = el.children[0];
-		let insideText = instructorName.innerText;
-		if (insideText.toLowerCase().includes("view syllabus")) {
-			instructorName.innerText = insideText.substr(0, insideText.indexOf("View syllabus"));
-			insideText = instructorName.innerText;
-		}
-		if (!insideText.includes("--")) {
-			let splitIt = (insideText).split(" ");
-			if (splitIt[1].includes(".") || splitIt[1].length == 1 | splitIt[2] != null) {
-				let cleanName = splitIt[0] + " " + splitIt[2];
-				instructorName.innerText = cleanName;
-			}
-			instructorNames.push(instructorName);
+	if (divs.length > 0) {
+		divs.forEach(function (el) {
+			let instructorName = el.children[0];
+			if (instructorName != null) {
+				let insideText = instructorName.innerText;
+				if (insideText.toLowerCase().includes("view syllabus")) {
+					instructorName.innerText = insideText.substr(0, insideText.indexOf("View syllabus"));
+					insideText = instructorName.innerText;
+				}
+				if (!insideText.includes("--")) {
+					let splitIt = (insideText).split(" ");
+					if (splitIt[1].includes(".") || splitIt[1].length == 1 | splitIt[2] != null) {
+						let cleanName = splitIt[0] + " " + splitIt[2];
+						instructorName.innerText = cleanName;
+					}
+					instructorNames.push(instructorName);
 
+				}
+			}
+		});
+		for (let i = 0; i < instructorNames.length; i++) {
+			getScores(instructorNames[i].innerText, instructorNames[i]);
 		}
-	});
-	for (let i = 0; i < instructorNames.length; i++) {
-		getScores(instructorNames[i].innerText, instructorNames[i]);
+	} else {
+		console.log("Unable to find professors on this page.");
 	}
 }
 
@@ -69,7 +80,7 @@ function createElements(message, originalEl) {
 		$(originalEl).children('.loading').remove();
 		upperEl.append(overallDiv);
 	} else {
-		$(originalEl).children('.loading').remove();
+		$(originalEl).children('.rmp-loading').remove();
 		let failedDiv = $('<p>No RMP data!</p>');
 		let upperEl = $(originalEl).parents('.course-section-instructor');
 		upperEl.append(failedDiv);
@@ -81,7 +92,7 @@ function createElements(message, originalEl) {
  * that will be injected into the page
  */
 function getScores(name, element) {
-	$(element).append($("<p class='loading'>Loading!</p>"));
+	$(element).append($("<p class='rmp-loading'>Loading!</p>"));
 	let cleanedName = name.replace(" ", "+");
 	let url = `https://students.washington.edu/joncady/projects/ratemyprofessor/rmp.php?name=${cleanedName}`;
 	var el = element;

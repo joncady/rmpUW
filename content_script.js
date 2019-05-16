@@ -4,7 +4,7 @@
  * RateMyProfessor Chrome Extension
  * Not for public distribution
  * Dev: Jonathan Cady
- * Version: 1.1
+ * Version: 1.2
  */
 
 checkDivs();
